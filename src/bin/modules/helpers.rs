@@ -39,5 +39,7 @@ pub fn get_default_project_branch(gl: &GLApi, project: &str) -> String {
 pub fn get_git_ref_msg(git_ref: &str) -> String {
   let cmd = format!("git log --format=%B -n 1 {}", git_ref);
   let err_msg = "[ERROR] Cannot get current branch.";
-  exec_get_string(&cmd, err_msg)
+  let s = exec_get_string(&cmd, err_msg);
+  let first_line = s.lines().next().unwrap_or_default().to_owned() + "...";
+  first_line
 }

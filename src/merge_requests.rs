@@ -143,7 +143,7 @@ pub struct MergeRequest {
   pub work_in_progress: bool,
   pub merge_when_pipeline_succeeds: bool,
   pub merge_status: String,
-  pub sha: String,
+  pub sha: Option<String>,
   pub merge_commit_sha: Option<String>,
   // pub should_remove_source_branch: bool,
   // pub force_remove_source_branch: bool,

@@ -8,7 +8,7 @@ pub enum GLApiError {
   NoRepoUrl,
   #[fail(display = "project is required but not specified")]
   NoProject,
-  #[fail(display = "cannot parse response: {:?}", resp_text)]
+  #[fail(display = "cannot parse response: {}", resp_text)]
   CantParseResp { resp_text: String },
   #[fail(display = "API Error: {}", error)]
   APIErr { error: String },

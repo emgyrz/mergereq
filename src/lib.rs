@@ -136,8 +136,9 @@ impl<'a> GLApi<'a> {
 
     let resp = req.text()?;
 
-    if let Ok(result) = serde_json::from_str(&resp) {
-      return Ok(result);
+    match serde_json::from_str(&resp) {
+      Ok(r) => return Ok(r),
+      Err(e) => println!("{:?}", e),
     }
 
     println!("ERR>>>{:?}", resp);

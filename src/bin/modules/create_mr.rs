@@ -1,7 +1,7 @@
 use super::{args::Args, helpers};
 use clap::ArgMatches;
-use dialoguer::Confirmation;
 use gitlabapi::{CreateMRBody, GLApi, GetUsersQuery, MergeRequest, UserState};
+use std::io::{stdin, stdout, Write};
 
 #[derive(Debug)]
 pub struct CreateMRArgsData<'a> {
@@ -116,6 +116,19 @@ fn get_assignee_str(id: Option<u32>, args: &CreateMRArgsData) -> String {
   }
 }
 
+fn prompt() -> bool {
+  print!("Do you want to continue? [Y/n]");
+  let mut s = String::new();
+  let _ = stdout().flush();
+  stdin()
+    .read_line(&mut s)
+    .expect("Did not enter a correct string");
+
+  let s = s.trim();
+
+  s == "" || s == "y" || s == "Y"
+}
+
 pub fn confirm_mr(mr_data: &CreateMRBody, args: &CreateMRArgsData) {
   println!("You creating merge requests with this parameters:");
   println!("  Source branch: — {}", mr_data.source_branch);
@@ -124,12 +137,7 @@ pub fn confirm_mr(mr_data: &CreateMRBody, args: &CreateMRArgsData) {
   let assignee = get_assignee_str(mr_data.assignee_id, args);
   println!("  Assignee:    —   {}", assignee);
 
-  let confirmed = Confirmation::new()
-    .with_text("Do you want to continue?")
-    .interact()
-    .unwrap();
-
-  if !confirmed {
+  if !prompt() {
     println!("Canceling...");
     std::process::exit(1);
   }
