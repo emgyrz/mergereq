@@ -1,2 +1,2 @@
-repo_url = "https://git.addreality.com"
-default_project = "web/cpp"
+repo_url = "https://example.com"
+default_project = "web/my_best_project"
