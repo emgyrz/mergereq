@@ -12,10 +12,8 @@ use modules::{
   args::{parse_args, Args},
   configs::Configs,
   create_mr,
-  helpers::get_current_branch,
 };
 
-// TODO: del old config
 use gitlabapi::{Branch, GLApi, MergeRequest, Project, ReqParams, User};
 
 fn main() {
@@ -27,8 +25,6 @@ fn main() {
 }
 
 fn run() -> Result<(), Box<dyn std::error::Error>> {
-  get_current_branch();
-
   let yaml = load_yaml!("modules/args/cfg.yml");
   let matches = App::from_yaml(yaml).get_matches();
 
