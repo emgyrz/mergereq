@@ -1,0 +1,29 @@
+{
+  "name": "mergereq-bin",
+  "version": "0.1.0",
+  "main": "index.js",
+  "description": "Gitlab CLI merge requests & helpers",
+  "license": "MIT",
+  "repository": "https://github.com/emgyrz/mergereq",
+  "keywords": [
+    "git",
+    "gitlab",
+    "merge request"
+  ],
+  "bin": {
+    "mergereq": "cli.js"
+  },
+  "author": {
+    "name": "Max Zommer",
+    "email": "emgyrz@gmail.com",
+    "url": "https://github.com/emgyrz"
+  },
+  "files": [
+    "mergereq-linux64/mergereq",
+    "mergereq-osx64/mergereq",
+    "mergereq-win64/mergereq.exe",
+    "cli.js",
+    "LICENSE",
+    "index.js"
+  ]
+}

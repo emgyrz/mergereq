@@ -1,0 +1,2 @@
+92249244a9f0c947009e5ae29690d97d85ca177cfa47910ca553425f01d7a19c  mjs/mergereq-win64/mergereq.exe
+b45ee63e469f61f3eff67ff46a162f283232cd3c81d9e89ee7fba4639c3c461b  mjs/mergereq-linux64/mergereq

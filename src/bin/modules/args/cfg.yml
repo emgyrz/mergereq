@@ -1,0 +1,271 @@
+name: glapi
+version: "1.0"
+about: GitLab API
+author: mz <emgyrz@gmail.com>
+
+settings: [ VersionlessSubcommands, SubcommandRequiredElseHelp, ColoredHelp, DisableHelpSubcommand ]
+
+vars:
+    private-token: &private-token
+        long: private-token
+        help: Sets the GitLab private token for requests
+        takes_value: true
+        global: true
+    project: &project
+        short: P
+        long: project
+        help: The ID or path of the project owned by the authenticated user
+        takes_value: true
+
+
+args:
+    - global-config:
+        long: global-config
+        help: Path of global config file. e.g. for Linux it would be `~/.config/.mergereq-config`
+        global: true
+        takes_value: true
+    - local-config:
+        long: local-config
+        help: Path of local config file. Default is `.mergereqrc.toml` in the current directory.
+        global: true
+        takes_value: true
+    - project:
+        short: P
+        global: true
+        long: project
+        help: The ID or path of the project owned by the authenticated user
+        takes_value: true
+    - repo-url:
+        global: true
+        long: repo-url
+        # TODO: добавить нормальное описание
+        help: URL of your Gitlab domain
+        takes_value: true
+
+subcommands:
+
+    - config:
+        settings: [ SubcommandRequiredElseHelp, VersionlessSubcommands, ColoredHelp, DisableHelpSubcommand ]
+        about: Command to work with config
+
+        subcommands:
+            - save-token:
+                about: Store token to config file
+                args:
+                    - private-token:
+                        help: New GitLab private token to store
+                        required: true
+                        index: 1
+
+                    - file-path:
+                        short: "f"
+                        long: file-path
+                        help: Path to store config file
+                        takes_value: true
+            - show-token:
+                about: Show GitLab private token
+                args:
+                    - file-path:
+                        short: "f"
+                        long: file-path
+                        help: Path to store config file
+                        takes_value: true
+
+
+    - create:
+        settings: [ SubcommandRequiredElseHelp, VersionlessSubcommands, ColoredHelp, DisableHelpSubcommand ]
+        about: Created new merge requests
+
+        args:
+            - private-token: *private-token
+
+        subcommands:
+            - mr:
+                about: Creates merge request
+                args:
+                    - title:
+                        short: "I"
+                        long: title
+                        help: Title of MR
+                        takes_value: true
+                    - source-branch:
+                        short: S
+                        long: src
+                        help: The source branch
+                        takes_value: true
+                    - target-branch:
+                        short: T
+                        long: trg
+                        help: The target branch
+                        takes_value: true
+                    - assignee-id:
+                        long: assignee-id
+                        help: Assignee user ID
+                        takes_value: true
+                    - assignee-name:
+                        short: A
+                        long: assignee-name
+                        help: Assignee user name
+                        takes_value: true
+                        conflicts_with:
+                            - assignee-id
+                    - description:
+                        short: D
+                        long: desc
+                        help: Description of MR. Limited to 1 000 000 characters
+                        takes_value: true
+                    - remove-source-branch:
+                        short: R
+                        long: remove-source-branch
+                        help: Flag indicating if a merge request should remove the source branch when merging
+                    - squash:
+                        short: Q
+                        long: squash
+                        help: Squash commits into a single commit when merging
+                    # - project:
+                    #     short: P
+                    #     long: project
+                    #     help: The ID or path of the project owned by the authenticated user
+                    #     takes_value: true
+                    # - project: *project
+
+
+    - ls:
+        settings: [ SubcommandRequiredElseHelp, VersionlessSubcommands, ColoredHelp, DisableHelpSubcommand ]
+        about: Print info about everything
+
+        args:
+            - private-token: *private-token
+
+
+        subcommands:
+            - users:
+                about: List users
+                args:
+                    - username:
+                        short: "N"
+                        long: username
+                        help: Search for users by name or primary email
+                        takes_value: true
+
+                    - active:
+                        long: active
+                        help: Show only active users
+                        short: A
+                        conflicts_with:
+                            - blocked
+
+                    - blocked:
+                        long: blocked
+                        help: Show only blocked users
+                        short: B
+            - branches:
+                about: List branches
+                args:
+                    - search:
+                        short: S
+                        long: search
+                        help: Return list of branches containing the search string. You can use ^term and term$ to find branches that begin and end with term respectively.
+                        takes_value: true
+                    # - project: *project
+
+            - mr:
+                about: List merge requests
+                args:
+                    # - project: *project
+
+                    - search:
+                        short: S
+                        long: search
+                        help: Search merge requests against their title and description
+                        takes_value: true
+                    - state:
+                        short: E
+                        long: state,
+                        help: Return all merge requests or just those that are opened, closed, locked, or merged
+                        takes_value: true
+                        possible_values: [ opened, closed, locked, merged ]
+                    - scope:
+                        short: C
+                        long: scope,
+                        help: "Return merge requests for the given scope: created_by_me, assigned_to_me or all. Defaults to created_by_me"
+                        takes_value: true
+                        possible_values: [ created_by_me, assigned_to_me, all ]
+                    - author-id:
+                        short: U
+                        long: "author-id"
+                        help: "Returns merge requests created by the given user id. Combine with scope=all or scope=assigned_to_me"
+                        takes_value: true
+                    - assignee-id:
+                        short: A
+                        long: assignee-id
+                        help: "Returns merge requests assigned to the given user id. None returns unassigned merge requests. Any returns merge requests with an assignee."
+                        takes_value: true
+                    - source-branch:
+                        short: R
+                        long: source-branch
+                        help: "Return merge requests with the given source branch"
+                        takes_value: true
+                    - target-branch:
+                        short: T
+                        long: target-branch
+                        help: "Return merge requests with the given target branch"
+                        takes_value: true
+
+                # args:
+                #     - username:
+                #         short: "N"
+                #         long: username
+                #         help: Search for users by name or primary email
+                #         takes_value: true
+
+                #     - active:
+                #         long: active
+                #         help: Show only active users
+                #         short: A
+                #         conflicts_with:
+                #             - blocked
+
+                #     - blocked:
+                #         long: blocked
+                #         help: Show only blocked users
+                #         short: B
+
+
+
+            - projects:
+                about: List projects
+                args:
+                    - search:
+                        short: S
+                        long: search
+                        help: Return list of projects matching the search criteria
+                        takes_value: true
+
+                    - visibility:
+                        short: V
+                        long: visibility
+                        help: Limit by visibility
+                        possible_values:
+                            - public
+                            - internal
+                            - private
+                        takes_value: true
+
+                    - archived:
+                        short: A
+                        long: archived
+                        help: Limit by archived status
+
+                    - owned:
+                        short: O
+                        long: owned
+                        help: Limit by projects explicitly owned by the current user
+
+                    - membership:
+                        short: M
+                        long: membership
+                        help: Limit by projects that the current user is a member of
+
+
+
