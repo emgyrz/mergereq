@@ -64,11 +64,12 @@ pub fn fill_mr_create_data<'a>(
   let assignee_id = get_assignee_id(glapi, args_data);
 
   CreateMRBody {
-    project,
+    id: project.to_owned(),
     source_branch: source_branch,
     target_branch: target_branch,
     title,
     assignee_id,
+    description: None,
   }
 }
 

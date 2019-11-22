@@ -296,14 +296,25 @@ impl<'a> GetMergeRequestsQuery<'a> {
   }
 }
 
+/// Request body for creating a new merge request.
 #[derive(Debug, Default, Serialize)]
 pub struct CreateMRBody<'a> {
-  pub project: &'a str,
+  /// The ID or URL-encoded path of the project owned by the authenticated user
+  pub id: String,
+
+  /// The source branch
   pub source_branch: String,
+
+  /// The target branch
   pub target_branch: String,
+
+  /// Title of MR
   pub title: String,
+
+  /// Assignee user ID
   pub assignee_id: Option<u32>,
-  // pub description: Option<&'a str>,
+
+  pub description: Option<&'a str>,
   // pub remove_source_branch: Option<bool>,
   // pub squash: Option<bool>,
   // id  integer/string  yes   The ID or URL-encoded path of the project owned by the authenticated user
