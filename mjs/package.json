@@ -1,6 +1,6 @@
 {
   "name": "mergereq-bin",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "main": "index.js",
   "description": "Gitlab CLI merge requests & helpers",
   "license": "MIT",
