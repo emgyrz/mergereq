@@ -30,10 +30,6 @@ You may overwrite all this parameters when run command with `--private-token`, `
 
 
 
-### Example
-
-
-
 ### Docs
 All documentation available in mergereq CLI with `--help` or `-h` flag. Some examples here:
 
