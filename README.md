@@ -48,6 +48,18 @@ Some options has default values
 ##### Example
 ```sh
 mergereq create mr -A team.lead
+
+#  You creating merge requests with this parameters:
+#    Source branch: — feature/move_btn
+#    Target branch: — develop
+#    Title branch:  — Move button by 1px to the right
+#    Assignee:    —   team.lead (ID: 2)
+#  Do you want to continue? [Y/n]
+#
+#  Your merge request is created. You can see it here:
+#  https://example.com/web/my_best_project/merge_requests/23
+#  Status: can_be_merged
+
 ```
 
 #### Create merge request
