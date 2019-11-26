@@ -1,4 +1,5 @@
 # mergereq
+CLI for Gitlab merge requests & some other helpers
 
 ### Install
 ```sh
