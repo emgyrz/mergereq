@@ -1,5 +1,10 @@
 # mergereq
 
+### Install
+```sh
+sudo npm i -g mergereq-bin
+```
+
 ### Create merge request
 ```sh
 mergereq-create-mr
