@@ -7,7 +7,7 @@ description = "CLI for Gitlab merge requests & more"
 license-file = "LICENSE"
 homepage = "https://github.com/emgyrz/mergereq"
 repository = "https://github.com/emgyrz/mergereq.git"
-keywords = ["git", "gitlab", "merge requests"]
+keywords = ["git", "gitlab", "merge", "requests"]
 categories = [ "cli"]
 readme = "README.md"
 
