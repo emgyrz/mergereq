@@ -3,6 +3,14 @@ name = "mergereq"
 version = "0.1.8"
 authors = ["mz"]
 edition = "2018"
+description = "CLI for Gitlab merge requests & more"
+license-file = "LICENSE"
+homepage = "https://github.com/emgyrz/mergereq"
+repository = "https://github.com/emgyrz/mergereq.git"
+keywords = ["git", "gitlab", "merge requests"]
+categories = [ "cli"]
+readme = "README.md"
+
 
 
 [dependencies]
