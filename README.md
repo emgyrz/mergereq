@@ -12,15 +12,15 @@ npm i -g mergereq-bin
 ### Setup
 First of all, to request data requires authentication you need to save you Gitlab private token.
 ( Find it [here](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html) ).
-Token will be saved (by default) at system config dir, e.g. for Linux it would be `~/.config/.mergereq-config`. Path to global config can be overwritten with `--global-config` option
 ```sh
 mergereq config save-token "$YOUR_PRIVATE_TOKEN"
 ```
-
+Token will be saved (by default) at system config dir, e.g. for Linux it would be `~/.config/.mergereq-config`.
+Path to global config can be overwritten with `--global-config` option.
 
 
 Also create the local configuration file for mergereq in directory when you want to use it
-(default name is `./.mergereqrc.toml`). Path can be overwritten with `--local-config` option
+(default name is `./.mergereqrc.toml`). Path can be overwritten with `--local-config` option.
 ```toml
 # Gitlab API endpoint
 repo_url = "https://example.com"
@@ -32,20 +32,21 @@ default_project = "web/my_best_project"
 You may overwrite all this parameters when run command with `--private-token`, `--repo-url` and `-P, --project` options.
 
 
-
 ### Docs
 All documentation available in mergereq CLI with `--help` or `-h` flag. Some examples here:
 
 #### Aboute merge request creating
 Some options has default values
 
-| Option                                | Desc                                                                                                                    | Default                                 |
-|---------------------------------------|-------------------------------------------------------------------------------------------------------------------------|-----------------------------------------|
-| `-S, --src <source-branch>`           | The source branch                                                                                                       | Current git branch                      |
-| `-T, --trg <target-branch>`           | The target branch                                                                                                       | Project default branch                  |
-| `-I, --title <title>`                 | The target branch                                                                                                       | Message of last commit in source branch |
-| `--assignee-id <assignee-id>`         | Assignee user ID                                                                                                        | Unassigned                              |
+| Option                                | Desc                                                                                                                           | Default                                 |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------- |
+| `-S, --src <source-branch>`           | The source branch                                                                                                              | Current git branch                      |
+| `-T, --trg <target-branch>`           | The target branch                                                                                                              | Project default branch                  |
+| `-I, --title <title>`                 | The target branch                                                                                                              | Message of last commit in source branch |
+| `--assignee-id <assignee-id>`         | Assignee user ID                                                                                                               | Unassigned                              |
 | `-A, --assignee-name <assignee-name>` | Assignee user name. `mergereq` will fetch all active users, then search one with specified name, if not available throws error | Unassigned                              |
+| `-R, --remove-source-branch`          | Flag indicating if a merge request should remove the source branch when merging                                                | false                                   |
+| `-Q, --squash`                        | Squash commits into a single commit when merging                                                                               | false                                   |
 
 
 ##### Example

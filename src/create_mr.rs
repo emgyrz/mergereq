@@ -1,4 +1,4 @@
-use super::{args::Args, helpers};
+use super::{helpers};
 use clap::ArgMatches;
 use crate::api::{CreateMRBody, GLApi, GetUsersQuery, MergeRequest, UserState};
 use std::io::{stdin, stdout, Write};
@@ -12,56 +12,39 @@ pub struct CreateMRArgsData<'a> {
   title: Option<&'a str>,
 }
 
-pub fn collect_args<'a>(m: &'a ArgMatches) -> Args<'a> {
-  // pub id: &'a str,
-  // pub source_branch: &'a str,
-  // pub target_branch: &'a str,
-  // pub title: &'a str,
-  // pub assignee_id: Option<u32>,
-  // pub description: Option<&'a str>,
-  // pub remove_source_branch: Option<bool>,
-  // pub squash: Option<bool>,
-
-  let source_branch = m.value_of("source-branch");
-  let target_branch = m.value_of("target-branch");
-  let assignee_id = m.value_of("assignee-id");
-  let assignee_name = m.value_of("assignee-name");
-  let title = m.value_of("title");
-
-  let args_data = CreateMRArgsData {
-    source_branch,
-    target_branch,
-    assignee_id,
-    assignee_name,
-    title,
-  };
-  Args::CreateMR(args_data)
-}
 
 pub fn fill_mr_create_data<'a>(
   glapi: &GLApi,
   project: &'a str,
-  args_data: &'a CreateMRArgsData,
+  args_matches: &'a ArgMatches,
 ) -> CreateMRBody<'a> {
-  let source_branch = if let Some(s) = args_data.source_branch {
+
+  let source_branch = args_matches.value_of("source-branch");
+  let target_branch = args_matches.value_of("target-branch");
+  let assignee_id = args_matches.value_of("assignee-id");
+  let assignee_name = args_matches.value_of("assignee-name");
+  let title = args_matches.value_of("title");
+
+
+  let source_branch = if let Some(s) = source_branch {
     s.to_owned()
   } else {
     helpers::get_current_branch()
   };
 
-  let target_branch = if let Some(s) = args_data.target_branch {
+  let target_branch = if let Some(s) = target_branch {
     s.to_owned()
   } else {
     helpers::get_default_project_branch(glapi, project)
   };
 
-  let title = if let Some(t) = args_data.title {
+  let title = if let Some(t) = title {
     t.to_owned()
   } else {
     helpers::get_git_ref_msg(&source_branch)
   };
 
-  let assignee_id = get_assignee_id(glapi, args_data);
+  let assignee_id = get_assignee_id(glapi, assignee_id, assignee_name);
 
   CreateMRBody {
     id: project.to_owned(),
@@ -69,14 +52,17 @@ pub fn fill_mr_create_data<'a>(
     target_branch,
     title,
     assignee_id,
-    description: None,
+    // TODO:
+    description: args_matches.value_of("description"),
+    remove_source_branch: Some( args_matches.is_present("remove-source-branch") ),
+    squash: Some( args_matches.is_present("squash") ),
   }
 }
 
-fn get_assignee_id<'a>(glapi: &'a GLApi, args_data: &'a CreateMRArgsData) -> Option<u32> {
-  if let Some(assignee_name) = args_data.assignee_name {
+fn get_assignee_id<'a>(glapi: &'a GLApi, assignee_id: Option<&str>, assignee_name: Option<&str>) -> Option<u32> {
+  if let Some(name) = assignee_name {
     let uq = GetUsersQuery::new()
-      .username(assignee_name)
+      .username(name)
       .state(UserState::Active);
 
     let users = glapi.get_users(&uq).unwrap_or_else(|err| {
@@ -87,11 +73,11 @@ fn get_assignee_id<'a>(glapi: &'a GLApi, args_data: &'a CreateMRArgsData) -> Opt
       std::process::exit(1);
     });
     let user = users.get(0).unwrap_or_else(|| {
-      eprintln!("[ERROR] Cannot find user with name: `{}`", assignee_name);
+      eprintln!("[ERROR] Cannot find user with name: `{}`", name);
       std::process::exit(1);
     });
     return Some(user.id);
-  } else if let Some(id_str) = args_data.assignee_id {
+  } else if let Some(id_str) = assignee_id {
     let id: u32 = id_str.parse().unwrap_or_else(|err| {
       eprintln!(
         "[ERROR] You specify assignee id, but it is not a valid id. {}",
@@ -105,10 +91,10 @@ fn get_assignee_id<'a>(glapi: &'a GLApi, args_data: &'a CreateMRArgsData) -> Opt
   None
 }
 
-fn get_assignee_str(id: Option<u32>, args: &CreateMRArgsData) -> String {
+fn get_assignee_str(id: Option<u32>, name: Option<&str>) -> String {
   if let Some(i) = id {
     let mut s = format!("(ID: {})", i);
-    if let Some(name) = args.assignee_name {
+    if let Some(name) = name {
       s = format!("{} {}", name, s);
     }
     s
@@ -130,13 +116,13 @@ fn prompt() -> bool {
   s == "" || s == "y" || s == "Y"
 }
 
-pub fn confirm_mr(mr_data: &CreateMRBody, args: &CreateMRArgsData) {
+pub fn confirm_mr(mr_data: &CreateMRBody, args: &ArgMatches) {
   println!("You creating merge requests with this parameters:");
   println!("  Source branch: — {}", mr_data.source_branch);
   println!("  Target branch: — {}", mr_data.target_branch);
   let title = helpers::get_one_line(&mr_data.title);
   println!("  Title branch:  — {}", title);
-  let assignee = get_assignee_str(mr_data.assignee_id, args);
+  let assignee = get_assignee_str(mr_data.assignee_id, args.value_of("assignee-name"));
   println!("  Assignee:    —   {}", assignee);
 
   if !prompt() {

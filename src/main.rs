@@ -64,10 +64,10 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
       let mrs = gl.get_project_merge_requests("80", &q)?;
       ls_mrs(&mrs);
     }
-    Args::CreateMR(args_data) => {
+    Args::CreateMR(args_matches) => {
       let project = gl.req_params.get_default_project_checked()?;
-      let create_mr_data = create_mr::fill_mr_create_data(&gl, project, &args_data);
-      create_mr::confirm_mr(&create_mr_data, &args_data);
+      let create_mr_data = create_mr::fill_mr_create_data(&gl, project, &args_matches);
+      create_mr::confirm_mr(&create_mr_data, &args_matches);
       let mr = gl.create_merge_request(project, &create_mr_data)?;
       create_mr::log_new_mr(&mr);
     }

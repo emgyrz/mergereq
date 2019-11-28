@@ -315,16 +315,9 @@ pub struct CreateMRBody<'a> {
   pub assignee_id: Option<u32>,
 
   pub description: Option<&'a str>,
-  // pub remove_source_branch: Option<bool>,
-  // pub squash: Option<bool>,
-  // id  integer/string  yes   The ID or URL-encoded path of the project owned by the authenticated user
-  // source_branch   string  yes   The source branch
-  // target_branch   string  yes   The target branch
-  // title   string  yes   Title of MR
-  // assignee_id   integer   no  Assignee user ID
-  // assignee_ids  integer array   no  The ID of the user(s) to assign the MR to. Set to 0 or provide an empty value to unassign all assignees.
-  // description   string  no  Description of MR. Limited to 1 000 000 characters.
-  // target_project_id   integer   no  The target project (numeric id)
+  pub remove_source_branch: Option<bool>,
+  pub squash: Option<bool>,
+
   // labels  string  no  Labels for MR as a comma-separated list
   // milestone_id  integer   no  The global ID of a milestone
   // remove_source_branch  boolean   no  Flag indicating if a merge request should remove the source branch when merging

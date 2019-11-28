@@ -13,7 +13,7 @@ enum CfgVariant {
   Local,
 }
 
-fn default_global_file_path<'a>() -> GLApiResult<String> {
+fn default_global_file_path() -> GLApiResult<String> {
   let path = if let Some(bd) = BaseDirs::new() {
     bd.config_dir()
       .join(GLOBAL_FILE_NAME)
@@ -25,7 +25,7 @@ fn default_global_file_path<'a>() -> GLApiResult<String> {
   Ok(path)
 }
 
-fn default_local_file_path<'a>() -> GLApiResult<String> {
+fn default_local_file_path() -> GLApiResult<String> {
   let path = if let Ok(pwd) = std::env::current_dir() {
     pwd.join(LOCAL_FILE_NAME).to_string_lossy().to_string()
   } else {

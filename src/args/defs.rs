@@ -1,6 +1,6 @@
 use crate::api::{GetBranchesQuery, GetMergeRequestsQuery, GetProjectsQuery, GetUsersQuery};
+use clap::ArgMatches;
 
-use super::create_mr::CreateMRArgsData;
 
 #[derive(Debug)]
 pub enum Args<'a> {
@@ -11,7 +11,7 @@ pub enum Args<'a> {
     project: Option<&'a str>,
   },
   LsMr(GetMergeRequestsQuery<'a>),
-  CreateMR(CreateMRArgsData<'a>),
+  CreateMR(&'a ArgMatches<'a>),
   CfgSaveToken {
     token: &'a str,
     file_path: Option<&'a str>,

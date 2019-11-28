@@ -1,8 +1,6 @@
 use clap::ArgMatches;
 use std::str::FromStr;
 
-use super::create_mr;
-
 use crate::api::{
   GetBranchesQuery, GetMergeRequestsQuery, GetProjectsQuery, GetUsersQuery, MRScope, MRState,
   ProjectVisibility, UserState,
@@ -39,7 +37,7 @@ fn handle_ls<'a>(mat: &'a ArgMatches) -> Args<'a> {
 
 fn handle_create<'a>(mat: &'a ArgMatches) -> Args<'a> {
   if let Some(m) = mat.subcommand_matches("mr") {
-    return create_mr::collect_args(m);
+    return Args::CreateMR(m);
   }
   Args::Unknown
 }
