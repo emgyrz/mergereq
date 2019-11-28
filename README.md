@@ -1,9 +1,11 @@
 # mergereq
-CLI for Gitlab merge requests & some other helpers
+CLI for Gitlab merge requests & more
 
 ### Install
 ```sh
-sudo npm i -g mergereq-bin
+cargo install mergereq
+# or
+npm i -g mergereq-bin
 ```
 
 
@@ -43,7 +45,7 @@ Some options has default values
 | `-T, --trg <target-branch>`           | The target branch                                                                                                       | Project default branch                  |
 | `-I, --title <title>`                 | The target branch                                                                                                       | Message of last commit in source branch |
 | `--assignee-id <assignee-id>`         | Assignee user ID                                                                                                        | Unassigned                              |
-| `-A, --assignee-name <assignee-name>` | Assignee user name. `mergereq` will fetch all active users, then search one with specified name, otherwise throws error | Unassigned                              |
+| `-A, --assignee-name <assignee-name>` | Assignee user name. `mergereq` will fetch all active users, then search one with specified name, if not available throws error | Unassigned                              |
 
 
 ##### Example

@@ -1,20 +1,27 @@
 #[macro_use]
+extern crate failure;
+
+#[macro_use]
+extern crate serde;
+
+#[macro_use]
 extern crate clap;
-use clap::{App, ArgMatches};
 
 #[macro_use]
 extern crate prettytable;
+
+mod args;
+mod configs;
+mod create_mr;
+mod api;
+mod helpers;
+
 use prettytable::Table;
+use clap::{App, ArgMatches};
+use args::{parse_args, Args};
+use configs::Configs;
 
-mod modules;
-
-use modules::{
-  args::{parse_args, Args},
-  configs::Configs,
-  create_mr,
-};
-
-use gitlabapi::{Branch, GLApi, MergeRequest, Project, ReqParams, User};
+use api::{Branch, GLApi, MergeRequest, Project, ReqParams, User};
 
 fn main() {
   if let Err(err) = run() {
@@ -25,7 +32,7 @@ fn main() {
 }
 
 fn run() -> Result<(), Box<dyn std::error::Error>> {
-  let yaml = load_yaml!("modules/args/cfg.yml");
+  let yaml = load_yaml!("args/cfg.yml");
   let matches = App::from_yaml(yaml).get_matches();
 
   let mut configs = Configs::read(
@@ -91,7 +98,7 @@ fn collect_req_params<'a>(matches: &'a ArgMatches, cfg: &'a Configs) -> ReqParam
 
   let token = matches
     .value_of("private-token")
-    .or_else(|| global_ref.and_then(|glob| Some(glob.private_token.as_str())));
+    .or_else(|| global_ref.map(|glob| glob.private_token.as_str()));
 
   let project = matches
     .value_of("project")
@@ -99,7 +106,7 @@ fn collect_req_params<'a>(matches: &'a ArgMatches, cfg: &'a Configs) -> ReqParam
 
   let repo_url = matches
     .value_of("repo-url")
-    .or_else(|| local_ref.and_then(|loc| Some(loc.repo_url.as_str())));
+    .or_else(|| local_ref.map(|loc| loc.repo_url.as_str()));
 
   ReqParams {
     private_token: token,

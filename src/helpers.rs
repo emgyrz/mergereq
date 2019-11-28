@@ -1,4 +1,4 @@
-use gitlabapi::GLApi;
+use crate::api::GLApi;
 use std::process::Command;
 
 fn exec_get_string(cmd: &str, err_msg: &str) -> String {
@@ -39,7 +39,15 @@ pub fn get_default_project_branch(gl: &GLApi, project: &str) -> String {
 pub fn get_git_ref_msg(git_ref: &str) -> String {
   let cmd = format!("git log --format=%B -n 1 {}", git_ref);
   let err_msg = "[ERROR] Cannot get current branch.";
-  let s = exec_get_string(&cmd, err_msg);
-  let first_line = s.lines().next().unwrap_or_default().to_owned() + "...";
-  first_line
+  exec_get_string(&cmd, err_msg)
+}
+
+
+pub fn get_one_line(s: &str) -> String {
+  let count = s.lines().count();
+  if count < 2 {
+    s.to_owned()
+  } else {
+    s.lines().next().unwrap_or_default().to_owned() + "..."
+  }
 }

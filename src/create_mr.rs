@@ -1,6 +1,6 @@
 use super::{args::Args, helpers};
 use clap::ArgMatches;
-use gitlabapi::{CreateMRBody, GLApi, GetUsersQuery, MergeRequest, UserState};
+use crate::api::{CreateMRBody, GLApi, GetUsersQuery, MergeRequest, UserState};
 use std::io::{stdin, stdout, Write};
 
 #[derive(Debug)]
@@ -65,8 +65,8 @@ pub fn fill_mr_create_data<'a>(
 
   CreateMRBody {
     id: project.to_owned(),
-    source_branch: source_branch,
-    target_branch: target_branch,
+    source_branch,
+    target_branch,
     title,
     assignee_id,
     description: None,
@@ -134,7 +134,8 @@ pub fn confirm_mr(mr_data: &CreateMRBody, args: &CreateMRArgsData) {
   println!("You creating merge requests with this parameters:");
   println!("  Source branch: — {}", mr_data.source_branch);
   println!("  Target branch: — {}", mr_data.target_branch);
-  println!("  Title branch:  — {}", mr_data.title);
+  let title = helpers::get_one_line(&mr_data.title);
+  println!("  Title branch:  — {}", title);
   let assignee = get_assignee_str(mr_data.assignee_id, args);
   println!("  Assignee:    —   {}", assignee);
 

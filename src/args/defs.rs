@@ -1,4 +1,4 @@
-use gitlabapi::{GetBranchesQuery, GetMergeRequestsQuery, GetProjectsQuery, GetUsersQuery};
+use crate::api::{GetBranchesQuery, GetMergeRequestsQuery, GetProjectsQuery, GetUsersQuery};
 
 use super::create_mr::CreateMRArgsData;
 

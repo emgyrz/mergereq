@@ -1,8 +1,3 @@
-#[macro_use]
-extern crate failure;
-
-#[macro_use]
-extern crate serde;
 
 #[cfg(test)]
 mod tests;
@@ -35,9 +30,9 @@ pub struct ReqParams<'a> {
 }
 
 impl<'a> ReqParams<'a> {
-  pub fn new() -> Self {
-    ReqParams::default()
-  }
+  // pub fn new() -> Self {
+  //   ReqParams::default()
+  // }
 
   // pub fn set_private_token(&mut self, val: &'a str) {
   //   self.private_token = Some(val);
@@ -170,12 +165,12 @@ impl<'a> GLApi<'a> {
     self.get(users::url_all(), Some(query))
   }
 
-  pub fn get_merge_requests(
-    &self,
-    query: &merge_requests::GetMergeRequestsQuery,
-  ) -> GLApiResult<Vec<merge_requests::MergeRequest>> {
-    self.get(merge_requests::url_all(), Some(query))
-  }
+  // pub fn get_merge_requests(
+  //   &self,
+  //   query: &merge_requests::GetMergeRequestsQuery,
+  // ) -> GLApiResult<Vec<merge_requests::MergeRequest>> {
+  //   self.get(merge_requests::url_all(), Some(query))
+  // }
   pub fn get_project_merge_requests(
     &self,
     project_id: &str,

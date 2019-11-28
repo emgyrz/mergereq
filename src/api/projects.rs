@@ -1,4 +1,4 @@
-use crate::GLApiError;
+use crate::api::GLApiError;
 use std::fmt;
 use std::str::FromStr;
 

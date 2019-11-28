@@ -1,7 +1,8 @@
 use directories::BaseDirs;
-use gitlabapi::{GLApiError, GLApiResult};
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
 use std::fs;
+
+use crate::api::{GLApiError, GLApiResult};
 
 static GLOBAL_FILE_NAME: &str = ".mergereq-config";
 static LOCAL_FILE_NAME: &str = ".mergereqrc.toml";

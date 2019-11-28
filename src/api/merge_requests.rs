@@ -3,7 +3,7 @@ use std::str::FromStr;
 
 use percent_encoding::{percent_encode, NON_ALPHANUMERIC};
 
-use crate::{users::User, GLApiError};
+use crate::api::{users::User, GLApiError};
 
 use serde::{Serialize, Serializer};
 
@@ -16,9 +16,9 @@ const STATE_CLOSED: &str = "closed";
 const STATE_LOCKED: &str = "locked";
 const STATE_MERGED: &str = "merged";
 
-pub fn url_all() -> &'static str {
-  "/merge_requests"
-}
+// pub fn url_all() -> &'static str {
+//   "/merge_requests"
+// }
 
 pub fn url_project_mr(project_id: &str) -> String {
   let mut u = "/projects/".to_owned();

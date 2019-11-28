@@ -1,6 +1,6 @@
-name: glapi
-version: "1.0"
-about: GitLab API
+name: mergereq
+version: "0.1.8"
+about: CLI for Gitlab merge requests & more
 author: mz <emgyrz@gmail.com>
 
 settings: [ VersionlessSubcommands, SubcommandRequiredElseHelp, ColoredHelp, DisableHelpSubcommand ]
@@ -11,11 +11,7 @@ vars:
         help: Sets the GitLab private token for requests
         takes_value: true
         global: true
-    project: &project
-        short: P
-        long: project
-        help: The ID or path of the project owned by the authenticated user
-        takes_value: true
+
 
 
 args:
@@ -122,12 +118,7 @@ subcommands:
                         short: Q
                         long: squash
                         help: Squash commits into a single commit when merging
-                    # - project:
-                    #     short: P
-                    #     long: project
-                    #     help: The ID or path of the project owned by the authenticated user
-                    #     takes_value: true
-                    # - project: *project
+
 
 
     - ls:
@@ -167,12 +158,10 @@ subcommands:
                         long: search
                         help: Return list of branches containing the search string. You can use ^term and term$ to find branches that begin and end with term respectively.
                         takes_value: true
-                    # - project: *project
 
             - mr:
                 about: List merge requests
                 args:
-                    # - project: *project
 
                     - search:
                         short: S

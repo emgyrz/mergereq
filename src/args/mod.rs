@@ -3,7 +3,7 @@ use std::str::FromStr;
 
 use super::create_mr;
 
-use gitlabapi::{
+use crate::api::{
   GetBranchesQuery, GetMergeRequestsQuery, GetProjectsQuery, GetUsersQuery, MRScope, MRState,
   ProjectVisibility, UserState,
 };

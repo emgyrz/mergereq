@@ -1,13 +1,8 @@
 [package]
-name = "gitlabapi"
-version = "0.1.7"
+name = "mergereq"
+version = "0.1.8"
 authors = ["mz"]
 edition = "2018"
-
-
-[[bin]]
-name = "mergereq"
-path = "src/bin/mergereq.rs"
 
 
 [dependencies]
