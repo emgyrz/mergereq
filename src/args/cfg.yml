@@ -1,5 +1,5 @@
 name: mergereq
-version: "0.1.9"
+version: "0.2.0"
 about: CLI for Gitlab merge requests & more
 author: mz <emgyrz@gmail.com>
 
