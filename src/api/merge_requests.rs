@@ -1,9 +1,7 @@
 use std::fmt;
 use std::str::FromStr;
 
-use percent_encoding::{percent_encode, NON_ALPHANUMERIC};
-
-use crate::api::{users::User, GLApiError};
+use crate::api::{users::User, GLApiError, utils};
 
 use serde::{Serialize, Serializer};
 
@@ -20,10 +18,10 @@ const STATE_MERGED: &str = "merged";
 //   "/merge_requests"
 // }
 
-pub fn url_project_mr(project_id: &str) -> String {
+pub fn url_project_mr(project: &str) -> String {
   let mut u = "/projects/".to_owned();
-  let id = percent_encode(project_id.as_bytes(), NON_ALPHANUMERIC);
-  u.push_str(&id.to_string());
+  let id = utils::encode(project).to_string();
+  u.push_str(&id);
   u.push_str("/merge_requests");
   u
 }

@@ -39,7 +39,7 @@ fn mr() -> Result<(), Box<dyn std::error::Error>> {
 
   let q = merge_requests::GetMergeRequestsQuery::new().state(merge_requests::MRState::Opened);
 
-  let pr = gl.get_project_merge_requests("80", &q)?;
+  let pr = gl.get_project_merge_requests(Some("80"), &q)?;
   for p in &pr {
     println!("{:#?}", p);
   }
@@ -53,7 +53,7 @@ fn branches() -> Result<(), Box<dyn std::error::Error>> {
 
   let q = branches::GetBranchesQuery::new();
 
-  let br = gl.get_project_branches("80", &q)?;
+  let br = gl.get_project_branches(Some("80"), &q)?;
   for b in &br {
     println!("{:#?}", b);
   }

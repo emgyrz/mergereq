@@ -1,8 +1,7 @@
-use crate::api::GLApiError;
+use crate::api::{GLApiError,utils};
 use std::fmt;
 use std::str::FromStr;
 
-use percent_encoding::{percent_encode, NON_ALPHANUMERIC};
 
 use serde::ser::{Serialize, Serializer};
 
@@ -16,8 +15,8 @@ pub fn url_all() -> &'static str {
 
 pub fn url_one(project: &str) -> String {
   let mut u = "/projects/".to_owned();
-  let id = percent_encode(project.as_bytes(), NON_ALPHANUMERIC);
-  u.push_str(&id.to_string());
+  let id = utils::encode(project).to_string();
+  u.push_str(&id);
   u
 }
 

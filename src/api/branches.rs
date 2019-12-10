@@ -1,8 +1,7 @@
-use percent_encoding::{percent_encode, NON_ALPHANUMERIC};
+use super::utils;
 
-pub fn url_all(project_id: &str) -> String {
-  let id = percent_encode(project_id.as_bytes(), NON_ALPHANUMERIC);
-  format!("/projects/{}/repository/branches", id)
+pub fn url_all(project: &str) -> String {
+  format!("/projects/{}/repository/branches", utils::encode(project))
 }
 
 #[derive(Debug, Deserialize)]

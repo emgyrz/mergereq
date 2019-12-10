@@ -55,13 +55,12 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
       let projects = gl.get_projects(&q)?;
       ls_projects(&projects);
     }
-    Args::LsBranches { query, project } => {
-      // TODO:
-      let branches = gl.get_project_branches(project.unwrap(), &query)?;
+    Args::LsBranches { project, query } => {
+      let branches = gl.get_project_branches(project, &query)?;
       ls_branches(&branches);
     }
-    Args::LsMr(q) => {
-      let mrs = gl.get_project_merge_requests("80", &q)?;
+    Args::LsMr{ project, query } => {
+      let mrs = gl.get_project_merge_requests(project, &query)?;
       ls_mrs(&mrs);
     }
     Args::CreateMR(args_matches) => {

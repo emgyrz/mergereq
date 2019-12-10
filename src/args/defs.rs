@@ -10,7 +10,10 @@ pub enum Args<'a> {
     query: GetBranchesQuery<'a>,
     project: Option<&'a str>,
   },
-  LsMr(GetMergeRequestsQuery<'a>),
+  LsMr {
+    project: Option<&'a str>,
+    query: GetMergeRequestsQuery<'a>
+  },
   CreateMR(&'a ArgMatches<'a>),
   CfgSaveToken {
     token: &'a str,

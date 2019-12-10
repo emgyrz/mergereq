@@ -7,6 +7,7 @@ mod error;
 mod merge_requests;
 mod projects;
 mod users;
+mod utils;
 
 pub use branches::{Branch, Commit, GetBranchesQuery};
 pub use merge_requests::{CreateMRBody, GetMergeRequestsQuery, MRScope, MRState, MergeRequest};
@@ -173,10 +174,15 @@ impl<'a> GLApi<'a> {
   // }
   pub fn get_project_merge_requests(
     &self,
-    project_id: &str,
+    project_in: Option<&str>,
     query: &merge_requests::GetMergeRequestsQuery,
   ) -> GLApiResult<Vec<merge_requests::MergeRequest>> {
-    self.get(&merge_requests::url_project_mr(project_id), Some(query))
+    let project = if let Some(pr) = project_in {
+      pr
+    }  else {
+      self.req_params.get_default_project_checked()?
+    };
+    self.get(&merge_requests::url_project_mr(project), Some(query))
   }
   pub fn create_merge_request(
     &self,
@@ -187,9 +193,14 @@ impl<'a> GLApi<'a> {
   }
   pub fn get_project_branches(
     &self,
-    project_id: &str,
+    project_in: Option<&str>,
     query: &branches::GetBranchesQuery,
   ) -> GLApiResult<Vec<branches::Branch>> {
-    self.get(&branches::url_all(project_id), Some(query))
+    let project = if let Some(pr) = project_in {
+      pr
+    }  else {
+      self.req_params.get_default_project_checked()?
+    };
+    self.get(&branches::url_all(project), Some(query))
   }
 }
