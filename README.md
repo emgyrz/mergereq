@@ -1,6 +1,10 @@
 # mergereq
 CLI for Gitlab merge requests & more
 
+
+![Crates.io](https://img.shields.io/crates/v/mergereq)
+![npm](https://img.shields.io/npm/v/mergereq-bin)
+
 ### Install
 ```sh
 cargo install mergereq
