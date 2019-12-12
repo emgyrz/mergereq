@@ -1,6 +1,6 @@
-use super::{helpers};
-use clap::ArgMatches;
+use super::helpers;
 use crate::api::{CreateMRBody, GLApi, GetUsersQuery, MergeRequest, UserState};
+use clap::ArgMatches;
 use std::io::{stdin, stdout, Write};
 
 #[derive(Debug)]
@@ -12,19 +12,16 @@ pub struct CreateMRArgsData<'a> {
   title: Option<&'a str>,
 }
 
-
 pub fn fill_mr_create_data<'a>(
   glapi: &GLApi,
   project: &'a str,
   args_matches: &'a ArgMatches,
 ) -> CreateMRBody<'a> {
-
   let source_branch = args_matches.value_of("source-branch");
   let target_branch = args_matches.value_of("target-branch");
   let assignee_id = args_matches.value_of("assignee-id");
   let assignee_name = args_matches.value_of("assignee-name");
   let title = args_matches.value_of("title");
-
 
   let source_branch = if let Some(s) = source_branch {
     s.to_owned()
@@ -54,16 +51,18 @@ pub fn fill_mr_create_data<'a>(
     assignee_id,
     // TODO:
     description: args_matches.value_of("description"),
-    remove_source_branch: Some( args_matches.is_present("remove-source-branch") ),
-    squash: Some( args_matches.is_present("squash") ),
+    remove_source_branch: Some(args_matches.is_present("remove-source-branch")),
+    squash: Some(args_matches.is_present("squash")),
   }
 }
 
-fn get_assignee_id<'a>(glapi: &'a GLApi, assignee_id: Option<&str>, assignee_name: Option<&str>) -> Option<u32> {
+fn get_assignee_id<'a>(
+  glapi: &'a GLApi,
+  assignee_id: Option<&str>,
+  assignee_name: Option<&str>,
+) -> Option<u32> {
   if let Some(name) = assignee_name {
-    let uq = GetUsersQuery::new()
-      .username(name)
-      .state(UserState::Active);
+    let uq = GetUsersQuery::new().username(name).state(UserState::Active);
 
     let users = glapi.get_users(&uq).unwrap_or_else(|err| {
       eprintln!(

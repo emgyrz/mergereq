@@ -42,7 +42,6 @@ pub fn get_git_ref_msg(git_ref: &str) -> String {
   exec_get_string(&cmd, err_msg)
 }
 
-
 pub fn get_one_line(s: &str) -> String {
   let count = s.lines().count();
   if count < 2 {

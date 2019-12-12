@@ -1,7 +1,7 @@
 use std::fmt;
 use std::str::FromStr;
 
-use crate::api::{users::User, GLApiError, utils};
+use crate::api::{users::User, utils, GLApiError};
 
 use serde::{Serialize, Serializer};
 
@@ -315,7 +315,6 @@ pub struct CreateMRBody<'a> {
   pub description: Option<&'a str>,
   pub remove_source_branch: Option<bool>,
   pub squash: Option<bool>,
-
   // labels  string  no  Labels for MR as a comma-separated list
   // milestone_id  integer   no  The global ID of a milestone
   // remove_source_branch  boolean   no  Flag indicating if a merge request should remove the source branch when merging

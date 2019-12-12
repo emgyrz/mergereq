@@ -141,6 +141,6 @@ fn handle_ls_mr<'a>(m: &'a ArgMatches) -> Args<'a> {
 
   Args::LsMr {
     project: m.value_of("project"),
-    query: q
+    query: q,
   }
 }

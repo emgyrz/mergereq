@@ -10,16 +10,16 @@ extern crate clap;
 #[macro_use]
 extern crate prettytable;
 
+mod api;
 mod args;
 mod configs;
 mod create_mr;
-mod api;
 mod helpers;
 
-use prettytable::Table;
-use clap::{App, ArgMatches};
 use args::{parse_args, Args};
+use clap::{App, ArgMatches};
 use configs::Configs;
+use prettytable::Table;
 
 use api::{Branch, GLApi, MergeRequest, Project, ReqParams, User};
 

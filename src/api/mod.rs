@@ -1,4 +1,3 @@
-
 #[cfg(test)]
 mod tests;
 
@@ -179,7 +178,7 @@ impl<'a> GLApi<'a> {
   ) -> GLApiResult<Vec<merge_requests::MergeRequest>> {
     let project = if let Some(pr) = project_in {
       pr
-    }  else {
+    } else {
       self.req_params.get_default_project_checked()?
     };
     self.get(&merge_requests::url_project_mr(project), Some(query))
@@ -198,7 +197,7 @@ impl<'a> GLApi<'a> {
   ) -> GLApiResult<Vec<branches::Branch>> {
     let project = if let Some(pr) = project_in {
       pr
-    }  else {
+    } else {
       self.req_params.get_default_project_checked()?
     };
     self.get(&branches::url_all(project), Some(query))

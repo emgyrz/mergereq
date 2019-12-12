@@ -1,7 +1,6 @@
-use crate::api::{GLApiError,utils};
+use crate::api::{utils, GLApiError};
 use std::fmt;
 use std::str::FromStr;
-
 
 use serde::ser::{Serialize, Serializer};
 
