@@ -14,9 +14,7 @@ pub enum Args<'a> {
     query: GetMergeRequestsQuery<'a>,
   },
   CreateMR(&'a ArgMatches<'a>),
-  CfgSaveToken {
-    token: &'a str,
-  },
+  CfgSaveToken(&'a str),
   CfgShowToken,
   CfgForgetToken,
   Unknown,

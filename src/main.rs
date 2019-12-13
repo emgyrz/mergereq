@@ -1,12 +1,9 @@
 #[macro_use]
 extern crate failure;
-
 #[macro_use]
 extern crate serde;
-
 #[macro_use]
 extern crate clap;
-
 #[macro_use]
 extern crate prettytable;
 
@@ -15,13 +12,13 @@ mod args;
 mod configs;
 mod create_mr;
 mod helpers;
+mod ls;
 
 use args::{parse_args, Args};
 use clap::{App, ArgMatches};
-use configs::Configs;
-use prettytable::Table;
+use configs::{Configs, CfgVariant};
 
-use api::{Branch, GLApi, MergeRequest, Project, ReqParams, User};
+use api::{GLApi, ReqParams};
 
 fn main() {
   if let Err(err) = run() {
@@ -49,19 +46,19 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
   match arg {
     Args::LsUsers(q) => {
       let users = gl.get_users(&q)?;
-      ls_users(&users);
+      ls::users(&users);
     }
     Args::LsProjects(q) => {
       let projects = gl.get_projects(&q)?;
-      ls_projects(&projects);
+      ls::projects(&projects);
     }
     Args::LsBranches { project, query } => {
       let branches = gl.get_project_branches(project, &query)?;
-      ls_branches(&branches);
+      ls::branches(&branches);
     }
-    Args::LsMr{ project, query } => {
+    Args::LsMr { project, query } => {
       let mrs = gl.get_project_merge_requests(project, &query)?;
-      ls_mrs(&mrs);
+      ls::mrs(&mrs);
     }
     Args::CreateMR(args_matches) => {
       let project = gl.req_params.get_default_project_checked()?;
@@ -71,8 +68,9 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
       create_mr::log_new_mr(&mr);
     }
 
-    Args::CfgSaveToken { token, .. /* file_path */ } => {
+    Args::CfgSaveToken(token) => {
       configs.save_new_token(token)?;
+      ls::save_token(configs.get_file_path(CfgVariant::Global));
     }
     Args::CfgShowToken => {
       let msg = "Private token is";
@@ -115,73 +113,4 @@ fn collect_req_params<'a>(matches: &'a ArgMatches, cfg: &'a Configs) -> ReqParam
     repo_url,
     default_project: project,
   }
-}
-
-fn ls_users(users: &[User]) {
-  let mut table = Table::new();
-
-  table.add_row(row!["ID", "USERNAME", "NAME", "STATE"]);
-  for u in users {
-    table.add_row(row![u.id, u.username, u.name, u.state]);
-  }
-  println!("Users ({}):", users.len());
-  table.printstd();
-}
-
-fn ls_projects(projects: &[Project]) {
-  let mut table = Table::new();
-
-  table.add_row(row!["ID", "NAME", "DESC", "DEF_BRANCH"]);
-  for p in projects {
-    let desc: &str = p
-      .description
-      .as_ref()
-      .map(|s| s.as_str())
-      .unwrap_or_default();
-    table.add_row(row![p.id, p.name, desc, p.default_branch]);
-  }
-  println!("Projects ({}):", projects.len());
-  table.printstd();
-}
-
-fn ls_branches(branches: &[Branch]) {
-  let mut table = Table::new();
-
-  table.add_row(row!["SHA", "NAME", "AUTHOR"]);
-  for b in branches {
-    table.add_row(row![b.commit.short_id, b.name, b.commit.author_name]);
-  }
-  println!("Branches ({}):", branches.len());
-  table.printstd();
-}
-
-fn ls_mrs(mrs: &[MergeRequest]) {
-  let mut table = Table::new();
-
-  table.add_row(row![
-    "ID",
-    "AUTHOR",
-    "ASSIGNEE",
-    "STATE",
-    "SOURCE_BRANCH",
-    "TARGET_BRANCH"
-  ]);
-  for mr in mrs {
-    let assignee = if let Some(u) = &mr.assignee {
-      &u.username
-    } else {
-      ""
-    };
-
-    table.add_row(row![
-      mr.id,
-      mr.author.username,
-      assignee,
-      mr.state,
-      mr.source_branch,
-      mr.target_branch
-    ]);
-  }
-  println!("Merge requests ({}):", mrs.len());
-  table.printstd();
 }

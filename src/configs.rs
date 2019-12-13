@@ -7,7 +7,7 @@ use crate::api::{GLApiError, GLApiResult};
 static GLOBAL_FILE_NAME: &str = ".mergereq-config";
 static LOCAL_FILE_NAME: &str = ".mergereqrc.toml";
 
-enum CfgVariant {
+pub enum CfgVariant {
   Global,
   #[allow(dead_code)]
   Local,
@@ -86,7 +86,7 @@ impl Configs {
     Ok(data)
   }
 
-  fn get_file_path(&self, cfg_variant: CfgVariant) -> &str {
+  pub fn get_file_path(&self, cfg_variant: CfgVariant) -> &str {
     match cfg_variant {
       CfgVariant::Global => &self.global_file_path,
       CfgVariant::Local => &self.local_file_path,
@@ -119,7 +119,6 @@ impl Configs {
     fs::remove_file(path)?;
     Ok(())
   }
-
 }
 
 impl GlobalData {
