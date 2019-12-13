@@ -113,6 +113,13 @@ impl Configs {
     global.set_token(token);
     self.store(CfgVariant::Global)
   }
+
+  pub fn remove_global_cfg(&mut self) -> GLApiResult<()> {
+    let path = self.get_file_path(CfgVariant::Global);
+    fs::remove_file(path)?;
+    Ok(())
+  }
+
 }
 
 impl GlobalData {

@@ -74,13 +74,16 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
     Args::CfgSaveToken { token, .. /* file_path */ } => {
       configs.save_new_token(token)?;
     }
-    Args::CfgShowToken { .. /* file_path */ } => {
+    Args::CfgShowToken => {
       let msg = "Private token is";
       if let Some(glob) = configs.global {
         println!("{} `{}`", msg, glob.private_token);
       } else {
         println!("{} None", msg);
       }
+    }
+    Args::CfgForgetToken => {
+      configs.remove_global_cfg()?;
     }
 
     Args::Unknown => {
@@ -143,14 +146,7 @@ fn ls_projects(projects: &[Project]) {
 
 fn ls_branches(branches: &[Branch]) {
   let mut table = Table::new();
-  // pub name: String,
-  // pub merge: Option<bool>,
-  // pub protected: bool,
-  // pub default: bool,
-  // pub developers_can_push: bool,
-  // pub developers_can_merge: bool,
-  // pub can_push: bool,
-  // pub commit: Commit,
+
   table.add_row(row!["SHA", "NAME", "AUTHOR"]);
   for b in branches {
     table.add_row(row![b.commit.short_id, b.name, b.commit.author_name]);
@@ -161,30 +157,6 @@ fn ls_branches(branches: &[Branch]) {
 
 fn ls_mrs(mrs: &[MergeRequest]) {
   let mut table = Table::new();
-
-  // pub id: u32,
-  // pub iid: u32,
-  // pub project_id: u32,
-  // pub title: String,
-  // pub description: Option<String>,
-  // pub state: String,
-  // pub merged_by: Option<User>,
-  // pub merged_at: Option<String>,
-  // pub closed_by: Option<User>,
-  // pub closed_at: Option<String>,
-  // pub created_at: String,
-  // pub updated_at: Option<String>,
-  // pub target_branch: String,
-  // pub source_branch: String,
-  // pub author: User,
-  // pub assignee: Option<User>,
-  // pub source_project_id: u32,
-  // pub target_project_id: u32,
-  // pub work_in_progress: bool,
-  // pub merge_when_pipeline_succeeds: bool,
-  // pub merge_status: String,
-  // pub sha: String,
-  // pub merge_commit_sha: Option<String>,
 
   table.add_row(row![
     "ID",

@@ -41,6 +41,7 @@ You may overwrite all this parameters when run command with `--private-token`, `
 Available subcommands:
 * `config save-token` - Stores token to config file
 * `config show-token` - Shows GitLab private token if exists
+* `config forget-token` - Removes global config file where private token is
 * `create mr` - Creates merge request
 * `ls branches` - Shows list of branches
 * `ls mr` - Shows list of merge requests

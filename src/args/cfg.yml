@@ -53,19 +53,10 @@ subcommands:
                         required: true
                         index: 1
 
-                    - file-path:
-                        short: "f"
-                        long: file-path
-                        help: Path to store config file
-                        takes_value: true
             - show-token:
                 about: Show GitLab private token
-                args:
-                    - file-path:
-                        short: "f"
-                        long: file-path
-                        help: Path to store config file
-                        takes_value: true
+            - forget-token:
+                about: Removes GitLab private token
 
 
     - create:

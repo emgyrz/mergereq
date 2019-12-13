@@ -16,10 +16,8 @@ pub enum Args<'a> {
   CreateMR(&'a ArgMatches<'a>),
   CfgSaveToken {
     token: &'a str,
-    file_path: Option<&'a str>,
   },
-  CfgShowToken {
-    file_path: Option<&'a str>,
-  },
+  CfgShowToken,
+  CfgForgetToken,
   Unknown,
 }
