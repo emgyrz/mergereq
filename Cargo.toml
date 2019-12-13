@@ -5,7 +5,6 @@ authors = ["mz"]
 edition = "2018"
 description = "CLI for Gitlab merge requests & more"
 license = "MIT"
-license-file = "LICENSE"
 homepage = "https://github.com/emgyrz/mergereq"
 repository = "https://github.com/emgyrz/mergereq.git"
 keywords = ["git", "gitlab", "merge", "requests"]
