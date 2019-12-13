@@ -2,8 +2,8 @@
 CLI for Gitlab merge requests & more
 
 
-![Crates.io](https://img.shields.io/crates/v/mergereq)
-![npm](https://img.shields.io/npm/v/mergereq-bin)
+[![Crates.io](https://img.shields.io/crates/v/mergereq)](https://crates.io/crates/mergereq)
+[![npm](https://img.shields.io/npm/v/mergereq-bin)](https://www.npmjs.com/package/mergereq-bin)
 
 ### Install
 ```sh
