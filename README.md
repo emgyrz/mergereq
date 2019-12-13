@@ -37,7 +37,15 @@ You may overwrite all this parameters when run command with `--private-token`, `
 
 
 ### Docs
-All documentation available in mergereq CLI with `--help` or `-h` flag. Some examples here:
+
+Available subcommands:
+* `config save-token` - Stores token to config file
+* `config show-token` - Shows GitLab private token if exists
+* `create mr` - Creates merge request
+* `ls branches` - Shows list of branches
+* `ls mr` - Shows list of merge requests
+* `ls projects` - Shows list of projects
+* `ls users` - Shows list of users
 
 #### Aboute merge request creating
 Some options has default values
@@ -99,68 +107,7 @@ OPTIONS:
 
 ```
 
-#### List
-```
-mergereq-ls
-Print info about everything
-
-USAGE:
-    mergereq ls [OPTIONS] <SUBCOMMAND>
-
-FLAGS:
-    -h, --help    Prints help information
-
-OPTIONS:
-        --global-config <global-config>    Path of global config file. e.g. for Linux it would be `~/.config/.mergereq
-                                           -config`
-        --local-config <local-config>      Path of local config file. Default is `.mergereqrc.toml` in the current
-                                           directory.
-        --private-token <private-token>    Sets the Gitlab private token for requests
-    -P, --project <project>                The ID or path of the project owned by the authenticated user
-        --repo-url <repo-url>              URL of your Gitlab domain
-
-SUBCOMMANDS:
-    branches    List branches
-    mr          List merge requests
-    projects    List projects
-    users       List users
-```
-
-
-
-#### List merge requests
-```
-mergereq-ls-mr
-List merge requests
-
-USAGE:
-    mergereq ls mr [OPTIONS]
-
-FLAGS:
-    -h, --help    Prints help information
-
-OPTIONS:
-    -A, --assignee-id <assignee-id>        Returns merge requests assigned to the given user id. None returns unassigned
-                                           merge requests. Any returns merge requests with an assignee.
-    -U, --author-id <author-id>            Returns merge requests created by the given user id. Combine with scope=all
-                                           or scope=assigned_to_me
-        --global-config <global-config>    Path of global config file. e.g. for Linux it would be `~/.config/.mergereq
-                                           -config`
-        --local-config <local-config>      Path of local config file. Default is `.mergereqrc.toml` in the current
-                                           directory.
-        --private-token <private-token>    Sets the Gitlab private token for requests
-    -P, --project <project>                The ID or path of the project owned by the authenticated user
-        --repo-url <repo-url>              URL of your Gitlab domain
-    -C, --scope, <scope>                   Return merge requests for the given scope: created_by_me, assigned_to_me or
-                                           all. Defaults to created_by_me [values: created_by_me, assigned_to_me, all]
-    -S, --search <search>                  Search merge requests against their title and description
-    -R, --source-branch <source-branch>    Return merge requests with the given source branch
-    -E, --state, <state>                   Return all merge requests or just those that are opened, closed, locked, or
-                                           merged [values: opened, closed, locked, merged]
-    -T, --target-branch <target-branch>    Return merge requests with the given target branch
-```
-
-
+All documentation available in mergereq CLI with `--help` or `-h` flag.
 
 ##### Enjoy using!
 
