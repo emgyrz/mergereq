@@ -70,7 +70,23 @@ pub fn mrs(mrs: &[MergeRequest]) {
   table.printstd();
 }
 
-
 pub fn save_token(config_path: &str) {
   println!("GitLab private token saved to `{}`:", config_path);
+}
+
+pub fn show_token(token: Option<&String>) {
+  let mut msg = String::from("Private token is ");
+  if let Some(t) = token {
+    msg.push_str(&format!("`{}`", t));
+  } else {
+    msg.push_str("not present");
+  }
+  println!("{}", msg);
+}
+
+pub fn forget_token(glob_cfg_path: &str) {
+  println!(
+    "Global config file with private token was deleted ({})",
+    glob_cfg_path
+  );
 }

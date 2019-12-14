@@ -16,7 +16,7 @@ mod ls;
 
 use args::{parse_args, Args};
 use clap::{App, ArgMatches};
-use configs::{Configs, CfgVariant};
+use configs::{CfgVariant, Configs};
 
 use api::{GLApi, ReqParams};
 
@@ -73,15 +73,16 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
       ls::save_token(configs.get_file_path(CfgVariant::Global));
     }
     Args::CfgShowToken => {
-      let msg = "Private token is";
-      if let Some(glob) = configs.global {
-        println!("{} `{}`", msg, glob.private_token);
-      } else {
-        println!("{} None", msg);
+      let mut tok = None;
+      if let Some(glob) = &configs.global {
+        tok = Some(&glob.private_token);
       }
+      ls::show_token(tok);
     }
     Args::CfgForgetToken => {
       configs.remove_global_cfg()?;
+      let glob_cfg_path = configs.get_file_path(CfgVariant::Global);
+      ls::forget_token(glob_cfg_path);
     }
 
     Args::Unknown => {
