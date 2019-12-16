@@ -46,9 +46,9 @@ fn handle_config<'a>(mat: &'a ArgMatches) -> Args<'a> {
   if let Some(m) = mat.subcommand_matches("save-token") {
     let token = m.value_of("private-token").unwrap();
     return Args::CfgSaveToken(token);
-  } else if mat.subcommand_matches("show-token").is_some() {
+  } else if mat.is_present("show-token") {
     return Args::CfgShowToken;
-  } else if mat.subcommand_matches("forget-token").is_some() {
+  } else if mat.is_present("forget-token") {
     return Args::CfgForgetToken;
   }
   Args::Unknown

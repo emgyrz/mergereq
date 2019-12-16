@@ -22,7 +22,7 @@ pub struct GLApi<'a> {
   pub req_params: ReqParams<'a>,
 }
 
-#[derive(Default, Debug)]
+#[derive(Default)]
 pub struct ReqParams<'a> {
   pub private_token: Option<&'a str>,
   pub repo_url: Option<&'a str>,

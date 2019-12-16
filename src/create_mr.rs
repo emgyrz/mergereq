@@ -3,15 +3,6 @@ use crate::api::{CreateMRBody, GLApi, GetUsersQuery, MergeRequest, UserState};
 use clap::ArgMatches;
 use std::io::{stdin, stdout, Write};
 
-#[derive(Debug)]
-pub struct CreateMRArgsData<'a> {
-  source_branch: Option<&'a str>,
-  target_branch: Option<&'a str>,
-  assignee_id: Option<&'a str>,
-  assignee_name: Option<&'a str>,
-  title: Option<&'a str>,
-}
-
 pub fn fill_mr_create_data<'a>(
   glapi: &GLApi,
   project: &'a str,
@@ -49,7 +40,6 @@ pub fn fill_mr_create_data<'a>(
     target_branch,
     title,
     assignee_id,
-    // TODO:
     description: args_matches.value_of("description"),
     remove_source_branch: Some(args_matches.is_present("remove-source-branch")),
     squash: Some(args_matches.is_present("squash")),

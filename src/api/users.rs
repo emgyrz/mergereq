@@ -11,7 +11,7 @@ pub fn url_all() -> &'static str {
 const STATE_ACTIVE: &str = "active";
 const STATE_BLOCKED: &str = "blocked";
 
-#[derive(Debug, Deserialize)]
+#[derive(Deserialize)]
 pub struct User {
   // {
   //     "id": 1,
@@ -27,7 +27,7 @@ pub struct User {
   pub state: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Deserialize)]
 pub enum UserState {
   Active,
   Blocked,
@@ -68,7 +68,7 @@ impl Serialize for UserState {
   }
 }
 
-#[derive(Debug, Default)]
+#[derive(Default)]
 pub struct GetUsersQuery<'a> {
   username: Option<&'a str>,
   state: Option<UserState>,

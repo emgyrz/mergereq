@@ -34,18 +34,17 @@ fn default_local_file_path() -> GLApiResult<String> {
   Ok(path)
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct GlobalData {
   pub private_token: String,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct LocalData {
   pub repo_url: String,
   pub default_project: Option<String>,
 }
 
-#[derive(Debug)]
 pub struct Configs {
   pub global: Option<GlobalData>,
   pub local: Option<LocalData>,

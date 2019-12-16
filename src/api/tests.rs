@@ -17,7 +17,7 @@ fn projects() -> Result<(), Box<dyn std::error::Error>> {
   // .membership(true);
 
   let pr = gl.get_projects(&q);
-  println!(">>>{:#?}", pr);
+  // println!(">>>{:#?}", pr);
   Ok(())
 }
 
@@ -29,7 +29,7 @@ fn users() -> Result<(), Box<dyn std::error::Error>> {
   // .username("mz2");
 
   let pr = gl.get_users(&q);
-  println!(">>>{:#?}", pr);
+  // println!(">>>{:#?}", pr);
   Ok(())
 }
 
@@ -41,7 +41,7 @@ fn mr() -> Result<(), Box<dyn std::error::Error>> {
 
   let pr = gl.get_project_merge_requests(Some("80"), &q)?;
   for p in &pr {
-    println!("{:#?}", p);
+    // println!("{:#?}", p);
   }
   println!(">>>{:#?}", pr.len());
   Ok(())
@@ -55,7 +55,7 @@ fn branches() -> Result<(), Box<dyn std::error::Error>> {
 
   let br = gl.get_project_branches(Some("80"), &q)?;
   for b in &br {
-    println!("{:#?}", b);
+    // println!("{:#?}", b);
   }
   println!(">>>{:#?}", br.len());
   Ok(())

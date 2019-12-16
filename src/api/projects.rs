@@ -19,7 +19,7 @@ pub fn url_one(project: &str) -> String {
   u
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Deserialize)]
 pub struct Project {
   pub id: u32,
   pub description: Option<String>,
@@ -52,7 +52,7 @@ pub struct Project {
   // "star_count": 0,
 }
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone)]
 pub enum ProjectVisibility {
   Public,
   Internal,
@@ -91,7 +91,7 @@ impl Serialize for ProjectVisibility {
   }
 }
 
-#[derive(Default, Serialize, Debug)]
+#[derive(Default, Serialize)]
 pub struct GetProjectsQuery<'a> {
   archived: Option<bool>,
   visibility: Option<ProjectVisibility>,

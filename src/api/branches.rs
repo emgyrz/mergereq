@@ -4,7 +4,7 @@ pub fn url_all(project: &str) -> String {
   format!("/projects/{}/repository/branches", utils::encode(project))
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Deserialize)]
 pub struct Commit {
   pub author_email: String,
   pub author_name: String,
@@ -29,7 +29,7 @@ pub struct Commit {
   //   ]
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Deserialize)]
 pub struct Branch {
   pub name: String,
   pub merge: Option<bool>,
@@ -51,7 +51,7 @@ pub struct Branch {
   // }
 }
 
-#[derive(Debug, Default, Serialize)]
+#[derive(Default, Serialize)]
 pub struct GetBranchesQuery<'a> {
   search: Option<&'a str>,
   per_page: u8,

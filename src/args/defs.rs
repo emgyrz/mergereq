@@ -1,7 +1,6 @@
 use crate::api::{GetBranchesQuery, GetMergeRequestsQuery, GetProjectsQuery, GetUsersQuery};
 use clap::ArgMatches;
 
-#[derive(Debug)]
 pub enum Args<'a> {
   LsUsers(GetUsersQuery<'a>),
   LsProjects(GetProjectsQuery<'a>),

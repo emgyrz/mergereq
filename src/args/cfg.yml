@@ -46,7 +46,7 @@ subcommands:
 
         subcommands:
             - save-token:
-                about: Store token to config file
+                about: Stores token to config file
                 args:
                     - private-token:
                         help: New GitLab private token to store
@@ -54,9 +54,9 @@ subcommands:
                         index: 1
 
             - show-token:
-                about: Show GitLab private token
+                about: Shows GitLab private token if exists
             - forget-token:
-                about: Removes GitLab private token
+                about: Removes global config file where private token is
 
 
     - create:
@@ -122,7 +122,7 @@ subcommands:
 
         subcommands:
             - users:
-                about: List users
+                about: Shows list of users
                 args:
                     - username:
                         short: "N"
@@ -142,7 +142,7 @@ subcommands:
                         help: Show only blocked users
                         short: B
             - branches:
-                about: List branches
+                about: Shows list of branches
                 args:
                     - search:
                         short: S
@@ -151,7 +151,7 @@ subcommands:
                         takes_value: true
 
             - mr:
-                about: List merge requests
+                about: Shows list of merge requests
                 args:
 
                     - search:
@@ -214,7 +214,7 @@ subcommands:
 
 
             - projects:
-                about: List projects
+                about: Shows list of projects
                 args:
                     - search:
                         short: S

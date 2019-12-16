@@ -118,7 +118,7 @@ pub fn url_project_mr(project: &str) -> String {
 //     }
 //   }
 
-#[derive(Debug, Deserialize)]
+#[derive(Deserialize)]
 pub struct MergeRequest {
   pub id: u32,
   pub iid: u32,
@@ -187,7 +187,6 @@ impl Serialize for MRState {
   }
 }
 
-#[derive(Debug)]
 pub enum MRScope {
   CreatedByMe,
   AssignedToMe,
@@ -226,7 +225,7 @@ impl Serialize for MRScope {
   }
 }
 
-#[derive(Default, Debug, Serialize)]
+#[derive(Default, Serialize)]
 pub struct GetMergeRequestsQuery<'a> {
   // state   string  no  Return all merge requests or just those that are opened, closed, locked, or merged
   // order_by  string  no  Return requests ordered by created_at or updated_at fields. Default is created_at
@@ -295,7 +294,7 @@ impl<'a> GetMergeRequestsQuery<'a> {
 }
 
 /// Request body for creating a new merge request.
-#[derive(Debug, Default, Serialize)]
+#[derive(Default, Serialize)]
 pub struct CreateMRBody<'a> {
   /// The ID or URL-encoded path of the project owned by the authenticated user
   pub id: String,

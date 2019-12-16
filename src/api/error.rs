@@ -1,4 +1,4 @@
-#[derive(Debug, Fail)]
+#[derive(Fail, Debug)]
 pub enum GLApiError {
   #[fail(display = "{}", 0)]
   Reqwest(reqwest::Error),
