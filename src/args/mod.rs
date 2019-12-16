@@ -6,7 +6,9 @@ use crate::api::{
   ProjectVisibility, UserState,
 };
 
+mod args_defs;
 mod defs;
+
 pub(crate) use defs::Args;
 
 pub fn parse_args<'a>(arg_matches: &'a ArgMatches) -> Args<'a> {

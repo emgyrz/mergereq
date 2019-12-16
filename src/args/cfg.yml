@@ -192,26 +192,6 @@ subcommands:
                         help: "Return merge requests with the given target branch"
                         takes_value: true
 
-                # args:
-                #     - username:
-                #         short: "N"
-                #         long: username
-                #         help: Search for users by name or primary email
-                #         takes_value: true
-
-                #     - active:
-                #         long: active
-                #         help: Show only active users
-                #         short: A
-                #         conflicts_with:
-                #             - blocked
-
-                #     - blocked:
-                #         long: blocked
-                #         help: Show only blocked users
-                #         short: B
-
-
 
             - projects:
                 about: Shows list of projects
