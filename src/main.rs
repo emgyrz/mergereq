@@ -14,8 +14,8 @@ mod create_mr;
 mod helpers;
 mod ls;
 
-use args::{parse_args, Args};
-use clap::{App, ArgMatches};
+use args::{get_matches, parse_args, ArgName, Args};
+use clap::ArgMatches;
 use configs::{CfgVariant, Configs};
 
 use api::{GLApi, ReqParams};
@@ -25,16 +25,14 @@ fn main() {
     eprintln!("[ERROR] {}", err);
     std::process::exit(1);
   }
-  // println!("Done");
 }
 
 fn run() -> Result<(), Box<dyn std::error::Error>> {
-  let yaml = load_yaml!("args/cfg.yml");
-  let matches = App::from_yaml(yaml).get_matches();
+  let matches = get_matches();
 
   let mut configs = Configs::read(
-    matches.value_of("global-config"),
-    matches.value_of("local-config"),
+    matches.value_of(ArgName::GlobalConfig),
+    matches.value_of(ArgName::LocalConfig),
   )?;
 
   let arg = parse_args(&matches);
@@ -98,15 +96,15 @@ fn collect_req_params<'a>(matches: &'a ArgMatches, cfg: &'a Configs) -> ReqParam
   let local_ref = cfg.local.as_ref();
 
   let token = matches
-    .value_of("private-token")
+    .value_of(ArgName::PrivateToken)
     .or_else(|| global_ref.map(|glob| glob.private_token.as_str()));
 
   let project = matches
-    .value_of("project")
+    .value_of(ArgName::Project)
     .or_else(|| local_ref.and_then(|loc| loc.default_project.as_ref().map(String::as_str)));
 
   let repo_url = matches
-    .value_of("repo-url")
+    .value_of(ArgName::RepoUrl)
     .or_else(|| local_ref.map(|loc| loc.repo_url.as_str()));
 
   ReqParams {

@@ -1,6 +1,3 @@
-#[cfg(test)]
-mod tests;
-
 mod branches;
 mod error;
 mod merge_requests;
